@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from service import Service
 from flask_cors import CORS
+import sys
 
 app = Flask(__name__)
 CORS(app)
@@ -37,6 +38,11 @@ def save_event():
 @app.route("/health")
 def health():
     return "healthly", 200
-
+ 
 if __name__ == '__main__':
+    args = sys.argv[1:]
+    
+    if (args and "--debug" in args):
+        app.run(debug=True)
+
     app.run()
