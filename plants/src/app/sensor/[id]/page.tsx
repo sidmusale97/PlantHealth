@@ -5,7 +5,8 @@ import PlantCard from "@/components/plantcard";
 export default function Sensor() {
      
     const params = useParams()
-    const imgName = `/plant${params.id}.jpg`
+    const id = String(params.id)
+    const imgName = `/plant${id}.jpg`
     
     interface PlantInfo {
         name: string,
@@ -17,7 +18,7 @@ export default function Sensor() {
     return (
     <>
     <div className="flex px-5">
-        <PlantCard id={params.id} name="Flowers" />
+        <PlantCard id={id} name="Flowers" />
     </div>
     </>)
 }

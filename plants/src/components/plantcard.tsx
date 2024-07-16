@@ -2,7 +2,7 @@
 import { Card, CardHeader, CardBody, CardFooter, Image, Link, Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
-export default function PlantCard({ id, name }) {
+export default function PlantCard({id, name} : { id: string, name: string }) {
   const imgName = `/plant${id}.jpg`
   const route = `/sensor/${id}`
 
@@ -15,7 +15,9 @@ export default function PlantCard({ id, name }) {
   useEffect(() => {
     const fetchData = async() => {
     try {
-      const res = await fetch(`https://plants-6hne5hahua-ue.a.run.app/latest-moisture/${id}`)
+      const beUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+      console.log(`${beUrl}/latest-moisture/${id}`)
+      const res = await fetch(`${beUrl}/latest-moisture/${id}`)
       const result = await res.json()
       setLatestMoisture(Number(result.moisture));
     } catch (error){
@@ -28,7 +30,6 @@ export default function PlantCard({ id, name }) {
 
   return (
     <>
-
       <Card className="py-4">
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
           <h1 className="text-tiny uppercase font-bold">{name}</h1>
