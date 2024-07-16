@@ -34,3 +34,5 @@ def save_event():
     service.save_event(body["sensor_id"], body['type'])
     return "ok", 200
 
+if __name__ == '__main__':
+    app.run()
