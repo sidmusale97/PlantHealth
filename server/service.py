@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 redis = Redis(
   host='redis-18401.c91.us-east-1-3.ec2.redns.redis-cloud.com',
   port=18401,
-  password='zYPyG5QVcTxOUZDKcig02aex4V1Kobu3')
+  password='zYPyG5QVcTxOUZDKcig02aex4V1Kobu3', decode_responses=True)
 
 MOSITURE_DATA_TOPIC = "moistures"
 MOISTURE_KEY_FORMAT = "moisture_data_%d"
@@ -40,6 +40,15 @@ class Service:
 
         except Exception as e:
             logging.error(e)
+    
+    def get_latest_moisture(self, sensor_id):
+        try:
+            key = MOISTURE_KEY_FORMAT % sensor_id
+            latest_moisture, timestamp = redis.zrange(key, -1, -1)[0].split(':')
+            
+            return latest_moisture, timestamp
+        except RuntimeError as e:
+            logging.error(e)
 
     def save_event(self,sensor_id, type):
         event_type = EVENT_TYPES[type]
@@ -50,6 +59,7 @@ class Service:
 
     def get_latest_feeding(self, sensor_id):
         return self.database.get_latest_feeding(sensor_id)
+    
 
     def alert(self):
         #play beeping
