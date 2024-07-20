@@ -15,6 +15,10 @@ redis = Redis(
 
 MOSITURE_DATA_TOPIC = "moistures"
 MOISTURE_KEY_FORMAT = "moisture_data_%d"
+
+LATEST_WATERING_KEY = "latest_watering_%s"
+LATEST_FEEDING_KEY = "latest_feeding_%s"
+
 THRESHOLD = 300
 
 EVENT_TYPES = {"FEEDING": 1, "WATERING": 2}
@@ -28,7 +32,7 @@ class Service:
         try:
             key = MOISTURE_KEY_FORMAT % sensor_id
             now = datetime.now()
-            delta = timedelta(minutes=30)
+            delta = timedelta(days=14)
             past = now - delta
             member =  "%d:%d" % (humidity,now.timestamp()) 
             redis.zadd(key, {member:now.timestamp()})
@@ -44,22 +48,48 @@ class Service:
     def get_latest_moisture(self, sensor_id):
         try:
             key = MOISTURE_KEY_FORMAT % sensor_id
-            latest_moisture, timestamp = redis.zrange(key, -1, -1)[0].split(':')
+
+            moistures = redis.zrange(key, -1, -1)
+
+            if (moistures):
+                latest_moisture, timestamp = moistures[0].split(':')
             
             return latest_moisture, timestamp
         except RuntimeError as e:
             logging.error(e)
+            raise e
 
-    def save_event(self,sensor_id, type):
-        event_type = EVENT_TYPES[type]
-        self.database.save_event(sensor_id, event_type)
+    def save_event(self,sensor_id, etype):
+        #event_type = EVENT_TYPES[type]
+        #self.database.save_event(sensor_id, event_type)
+        print(etype == "WATERING")
+        try:
+            key = LATEST_WATERING_KEY % sensor_id if "WATERING" == etype else LATEST_FEEDING_KEY % sensor_id
+            redis.set(key, int(datetime.now().timestamp()))
+        except Exception as e:
+            logging.error(e)
+            raise e
+            
 
     def get_latest_watering(self, sensor_id):
-        return self.database.get_latest_watering(sensor_id)
+        try:
+            print(sensor_id)
+            key = LATEST_WATERING_KEY % sensor_id
+            return redis.get(key)
+        except Exception as e:
+            logging.error(e)
+            raise e
+
+        #return self.database.get_latest_watering(sensor_id)
 
     def get_latest_feeding(self, sensor_id):
-        return self.database.get_latest_feeding(sensor_id)
-    
+        #return self.database.get_latest_feeding(sensor_id)
+        try:
+            key = LATEST_FEEDING_KEY % sensor_id
+            return redis.get(key)
+        except Exception as e:
+            logging.error(e)
+       
 
     def alert(self):
         #play beeping

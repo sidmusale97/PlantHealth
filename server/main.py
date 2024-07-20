@@ -32,7 +32,7 @@ def get_latest_moisture(sensor_id):
 @app.route("/event", methods=["POST"])
 def save_event():
     body = request.json
-    service.save_event(body["sensor_id"], body['type'])
+    service.save_event(body["id"], body['type'])
     return "ok", 200
 
 @app.route("/health")
