@@ -19,9 +19,17 @@ const handleClick = (type: string, id: number, setValue: any) => {
     .catch(error => {
       console.error("Error " + error);
     });
-  
-    setValue(new Date().getSeconds())
+
+  setValue(new Date().getSeconds())
 }
+
+export function calculateHowManyDaysAgo(timestamp: number) {
+  const now = new Date().getSeconds();
+  const diffInSeconds = now - timestamp;
+  const daysDiff = diffInSeconds / (60 * 60 * 24);
+  return daysDiff;
+}
+
 
 export function FeedButton({ id }: { id: number }) {
 
@@ -42,16 +50,21 @@ export function FeedButton({ id }: { id: number }) {
 
     const interval = setInterval(() => {
       fetchData();
-    
-    }, 60000);
+
+    }, 600000);
 
     return () => clearInterval(interval);
   },);
 
   return (<>
     <Button variant="shadow" className="bg-green-500 p-5 mb-3 rounded" onPress={() => { handleClick("FEEDING", id, setLatestFed) }}>
-      <div className="font-bold">Feed</div>
-      <div className="text-xs ">{latestFed != 0 && <span>{new Date(latestFed * 1000).toLocaleString()}</span>}</div>
+      <div className="flex flex-col">
+        <span className="font-bold">Feed</span>
+        <span className="text-xs italic"> Last Fed:
+          {calculateHowManyDaysAgo(latestFed) < 1 && <span className="ml-1">Less than a day ago</span>}
+          {calculateHowManyDaysAgo(latestFed) >= 1 && <span className="ml-1">{calculateHowManyDaysAgo(latestFed)} Day(s) ago</span>}
+        </span>
+      </div>
     </Button>
   </>)
 }
@@ -68,22 +81,27 @@ export function WaterButton({ id }: { id: number }) {
       console.log(error)
     };
   }
-  
+
   useEffect(() => {
     fetchData();
 
     const interval = setInterval(() => {
       fetchData();
-    
-    }, 60000);
+
+    }, 600000);
 
     return () => clearInterval(interval);
   },);
-  
+
   return (<>
     <Button variant="shadow" className="bg-blue-300 p-5 mb-3 rounded" onPress={() => { handleClick("WATERING", id, setLatestWatered) }}>
-      <div className="font-bold"> Water</div>
-      <div className="text-xs">{latestWater != 0 && <span>{new Date(latestWater * 1000).toLocaleString()}</span>}</div>
+      <div className="flex flex-col">
+        <span className="font-bold"> Water</span>
+        <span className="text-xs italic"> Last Watered:
+          {calculateHowManyDaysAgo(latestWater) < 1 && <span className="ml-1">Less than a day ago</span>}
+          {calculateHowManyDaysAgo(latestWater) >= 1 && <span className="ml-1">{calculateHowManyDaysAgo(latestWater)} Day(s) ago</span>}
+        </span>
+      </div>
     </Button>
   </>)
 }

@@ -32,7 +32,7 @@ class Service:
         try:
             key = MOISTURE_KEY_FORMAT % sensor_id
             now = datetime.now()
-            delta = timedelta(days=14)
+            delta = timedelta(days=7)
             past = now - delta
             member =  "%d:%d" % (humidity,now.timestamp()) 
             redis.zadd(key, {member:now.timestamp()})

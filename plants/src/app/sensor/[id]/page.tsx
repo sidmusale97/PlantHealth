@@ -29,9 +29,7 @@ export default function Sensor() {
                 </div>
                 <div className="flex flex-col p-3">
                     <h3 className="p-3 text-lg">Description</h3>
-                    <div className="flex flex-row p-2 m-2">
-                        <WaterButton id={id} />
-                    </div>
+                    <WaterButton id={id} />
                     <FeedButton id={id} />
                 </div>
           
