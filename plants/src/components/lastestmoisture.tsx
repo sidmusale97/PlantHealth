@@ -32,8 +32,11 @@ const fetchData = async () => {
     return () => clearInterval(interval);
   }, [id]);
 
-  return (<div className="flex-col text-left p-3 justify-left">
-    <p className="text-left">Current Moisture: {latestMoisture}</p>
+  return (<div className="flex-col p-3 text-center justify-center">
+    <p> Current Moisture: 
+      {latestMoisture > 100  && <span className="font-bold text-lg ml-3">{latestMoisture}</span>}
+      {latestMoisture < 100 && <span className="ml-3 text-red-500 italic">No sensor reading</span>}
+    </p>
     <p>Last Updated: {new Date(dataTimestamp*1000).toLocaleString()}</p>
   </div>)
 }

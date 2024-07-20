@@ -1,6 +1,5 @@
 'use client'
 import { useParams } from "next/navigation";
-import PlantCard from "@/components/plantcard";
 import { Image, Button, Link } from "@nextui-org/react";
 import LatestMoistureInfo from "@/components/lastestmoisture";
 import { error } from "console";

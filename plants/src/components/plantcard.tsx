@@ -16,10 +16,10 @@ export default function PlantCard({ id, name }: { id: number, name: string }) {
   return (
     <>
       <Card className="py-4">
-        <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+        <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
           <h1 className="text-tiny uppercase font-bold">{name}</h1>
         </CardHeader>
-        <CardBody className="overflow-visible py-2">
+        <CardBody className="overflow-visible py-2 items-center">
           <Link href={route}>
             <Image
               alt={name}
@@ -30,7 +30,7 @@ export default function PlantCard({ id, name }: { id: number, name: string }) {
           </Link>
         </CardBody>
         <CardFooter className="justify-center">
-          <div className="flex-row space-x-5">
+          <div className="flex flex-col">
             <WaterButton id={id}/>
             <FeedButton id={id}/>
             <LatestMoistureInfo id={id}/>
