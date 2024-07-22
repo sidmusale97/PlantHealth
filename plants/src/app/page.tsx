@@ -1,4 +1,11 @@
 import PlantCard from "@/components/plantcard";
+import { PlantInfo, PLANTS } from "@/data/plantsInfo";
+
+function chunkArray(array : PlantInfo[], chunkSize: number) {
+  return Array.from({ length: Math.ceil(array.length / chunkSize) }, (_, index) =>
+    array.slice(index * chunkSize, (index + 1) * chunkSize)
+  );
+}
 
 export default function Home() {
   return (
@@ -6,16 +13,15 @@ export default function Home() {
       <div className="overflow-x-auto">
         <table className="min-w-full bg-transparent">
           <tbody>
-            <tr className="bg-transparent">
-              <td className="hover:bg-gray-200 border-b p-4 items-center"><PlantCard id={1} name="Flowers" /> </td>
-              <td className="hover:bg-gray-200 border-b p-4"><PlantCard id={2} name="Succulent" /> </td>
-              <td className="hover:bg-gray-200 border-b p-4"><PlantCard id={3} name="Wonderful Ivy" /> </td>
-            </tr>
-            <tr className="bg-transparent">
-              <td className="hover:bg-gray-200 border-b p-4"><PlantCard id={4} name="Mint" /> </td>
-              <td className="hover:bg-gray-200 border-b p-4"><PlantCard id={5} name="Dragonscale" /> </td>
-              <td className="hover:bg-gray-200 border-b p-4"><PlantCard id={6} name="Basil" /> </td>
-            </tr>
+          {chunkArray(PLANTS, 3).map((row, rowIndex) => (
+              <tr key={rowIndex} className="bg-transparent">
+                {row.map((plant) => (
+                  <td key={plant.id} className="hover:bg-gray-200 border-b p-4">
+                    <PlantCard id={plant.id} name={plant.name} />
+                  </td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
