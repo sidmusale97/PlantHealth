@@ -24,10 +24,10 @@ const handleClick = (type: string, id: number, setValue: any) => {
 }
 
 export function calculateHowManyDaysAgo(timestamp: number) {
-  const now = new Date().getSeconds();
+  const now = Math.floor(new Date().getTime()/1000);
   const diffInSeconds = now - timestamp;
   const daysDiff = diffInSeconds / (60 * 60 * 24);
-  return daysDiff;
+  return Math.round(daysDiff);
 }
 
 
