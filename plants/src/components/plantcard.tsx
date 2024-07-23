@@ -7,12 +7,6 @@ export default function PlantCard({ id, name }: { id: number, name: string }) {
   const imgName = `/plant${id}.jpg`
   const route = `/sensor/${id}`
 
-
-  function handleClick() {
-    console.log("Button clicked")
-  }
-
-
   return (
     <>
       <Card className="py-4">

@@ -13,7 +13,6 @@ const fetchData = async () => {
       const beUrl = process.env.NEXT_PUBLIC_BACKEND_URL
       const res = await fetch(`${beUrl}/latest-moisture/${id}`)
       const result = await res.json()
-      console.log(result)
       setLatestMoisture(Number(result.moisture));
       setDataTimestamp(Number(result.timestamp));
     } catch (error) {
