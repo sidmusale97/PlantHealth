@@ -19,7 +19,12 @@ MOISTURE_KEY_FORMAT = "moisture_data_%d"
 LATEST_WATERING_KEY = "latest_watering_%s"
 LATEST_FEEDING_KEY = "latest_feeding_%s"
 
-THRESHOLD = 300
+WET = 300
+DRY = 600
+
+def normalize_moisture(moisture : int) -> float:
+    latest_humidity = round(1 - (int(moisture) - WET)/(DRY-WET),2)
+    return latest_humidity
 
 EVENT_TYPES = {"FEEDING": 1, "WATERING": 2}
 
@@ -37,27 +42,45 @@ class Service:
             member =  "%d:%d" % (humidity,now.timestamp()) 
             redis.zadd(key, {member:now.timestamp()})
             redis.zremrangebyscore(key, 0, past.timestamp())
-            recent_moistures = [float(x.split(':')[0]) for x in redis.zrange(key, 0, -1)]
-            avg_moisture = fmean(recent_moistures)
-            if (avg_moisture < THRESHOLD):
-                self.alert()
+            #recent_moistures = [float(x.split(':')[0]) for x in redis.zrange(key, 0, -1)]
+            #avg_moisture = fmean(recent_moistures)
 
         except Exception as e:
             logging.error(e)
     
     def get_latest_moisture(self, sensor_id):
         try:
+            latest_humidity, timestamp = -1,0 
             key = MOISTURE_KEY_FORMAT % sensor_id
 
             moistures = redis.zrange(key, -1, -1)
 
             if (moistures):
                 latest_moisture, timestamp = moistures[0].split(':')
-            
-            return latest_moisture, timestamp
+                latest_humidity = normalize_moisture(latest_moisture)
+                
+            return latest_humidity, timestamp
         except RuntimeError as e:
             logging.error(e)
             raise e
+        
+    def get_moisture(self, sensor_id, fromDate, toDate):
+        try:
+            key = key = MOISTURE_KEY_FORMAT % sensor_id
+            moistures = redis.zrangebyscore(key, fromDate, toDate)
+
+            x,y = [],[]
+
+            for m in moistures:
+                moisture, timestamp = m.split(':')
+                x.append(timestamp)
+                y.append(normalize_moisture(moisture))
+
+            return x,y
+        except Exception as e:
+            logging.error(e)
+            raise e
+
 
     def save_event(self,sensor_id, etype):
         #event_type = EVENT_TYPES[type]
@@ -89,6 +112,7 @@ class Service:
             return redis.get(key)
         except Exception as e:
             logging.error(e)
+        
        
 
     def alert(self):

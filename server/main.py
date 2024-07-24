@@ -2,16 +2,24 @@ from flask import Flask, request, jsonify
 from service import Service
 from flask_cors import CORS
 import sys
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 CORS(app)
 service = Service()
 
-@app.route("/moisture", methods=['POST'])
+@app.route("/moisture", methods=['POST', 'GET'])
 def moisture():
-    body = request.json
-    service.process_moisture_data(body["humidity"], body["sensor_id"])
-    return ("ok", 200)
+    if (request.method == "POST"):
+        body = request.json
+        service.process_moisture_data(body["humidity"], body["sensor_id"])
+        return ("ok", 200)
+    else:
+        fromDate = request.args.get('fromDate', type=int, default=(datetime.now() - timedelta(weeks=1)).timestamp())
+        toDate = request.args.get('toDate', type=int, default=datetime.now().timestamp())
+        sensor_id = request.args.get("sensor_id", type=int)     
+        moistures = service.get_moisture(sensor_id, fromDate, toDate)
+        return jsonify(moistures), 200
 
 @app.route("/latest-watering/<sensor_id>", methods=["GET"])
 def get_latest_watering(sensor_id):
@@ -34,6 +42,7 @@ def save_event():
     body = request.json
     service.save_event(body["id"], body['type'])
     return "ok", 200
+
 
 @app.route("/health")
 def health():

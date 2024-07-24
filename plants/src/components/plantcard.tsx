@@ -1,6 +1,6 @@
 'use client'
 import { Card, CardHeader, CardBody, CardFooter, Image, Link, Button } from "@nextui-org/react";
-import { WaterButton, FeedButton } from "./buttons";
+import { WaterButton, FeedButton } from './buttons'
 import LatestMoistureInfo from "./lastestmoisture";
 
 export default function PlantCard({ id, name }: { id: number, name: string }) {

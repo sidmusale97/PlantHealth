@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-
+import DecimalDisplay from "./DecimalDisplay";
 
 
 export default function LatestMoistureInfo({id} : {id: number}){
@@ -32,9 +32,9 @@ const fetchData = async () => {
   }, [id]);
 
   return (<div className="flex-col p-3 text-center justify-center">
-    <p> Current Moisture: 
-      {latestMoisture > 100  && <span className="font-bold text-lg ml-3">{latestMoisture}</span>}
-      {latestMoisture < 100 && <span className="ml-3 text-red-500 italic">No sensor reading</span>}
+    <p> Current Humidity: 
+      {latestMoisture > 0  && <DecimalDisplay decimal={latestMoisture}/>}
+      {latestMoisture < 0 && <span className="ml-3 text-red-500 italic">No sensor reading</span>}
     </p>
     <p>Last Updated: {new Date(dataTimestamp*1000).toLocaleString()}</p>
   </div>)

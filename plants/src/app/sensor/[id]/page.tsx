@@ -4,12 +4,17 @@ import { Image, Button, Link } from "@nextui-org/react";
 import LatestMoistureInfo from "@/components/lastestmoisture";
 import { error } from "console";
 import { WaterButton, FeedButton } from "@/components/buttons";
+import { useState } from "react";
 
 export default function Sensor() {
+
+    const [moistures, setMoitures] = useState([])
 
     const params = useParams()
     const id = Number(params.id)
     const imgName = `/plant${id}.jpg`
+
+    
 
 
     interface PlantInfo {

@@ -13,7 +13,7 @@ export default function Home() {
       <div className="overflow-x-auto">
         <table className="min-w-full bg-transparent">
           <tbody>
-          {chunkArray(PLANTS, 3).map((row, rowIndex) => (
+          {chunkArray(PLANTS, 4).map((row, rowIndex) => (
               <tr key={rowIndex} className="bg-transparent">
                 {row.map((plant) => (
                   <td key={plant.id} className="hover:bg-gray-200 border-b p-4">
