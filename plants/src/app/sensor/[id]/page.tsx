@@ -5,6 +5,7 @@ import LatestMoistureInfo from "@/components/lastestmoisture";
 import { error } from "console";
 import { WaterButton, FeedButton } from "@/components/buttons";
 import { useState } from "react";
+import MoistureGraph from "./MoistureGraph";
 
 export default function Sensor() {
 
@@ -36,6 +37,7 @@ export default function Sensor() {
                     <h3 className="p-3 text-lg">Description</h3>
                     <WaterButton id={id} />
                     <FeedButton id={id} />
+                    <MoistureGraph id={id} />
                 </div>
           
             </div>

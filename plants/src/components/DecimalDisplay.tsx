@@ -11,7 +11,7 @@ export default function DecimalDisplay({ decimal }: { decimal: number }) {
     }
     return (
         <span className={`font-bold text-lg ml-3 ${textColorClass}`}>
-          {decimal}
+          {(decimal*100).toFixed(0)}%
         </span>
       );
 }

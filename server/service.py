@@ -76,7 +76,7 @@ class Service:
                 x.append(timestamp)
                 y.append(normalize_moisture(moisture))
 
-            return x,y
+            return {"timestamps": x, "humidities": y}
         except Exception as e:
             logging.error(e)
             raise e
