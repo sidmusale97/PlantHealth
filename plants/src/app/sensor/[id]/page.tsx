@@ -27,19 +27,25 @@ export default function Sensor() {
 
     return (
         <>
-            <div className="flex flex-row p-10">
-                <div className="flex-col p-3 justify-center">
-                    <h1 className="text-center bg-green-100 text-2xl">Name</h1>
-                    <Image className="object-cover rounded" width={200} src={imgName} />
-                    <LatestMoistureInfo id={id} />
-                </div>
-                <div className="flex flex-col p-3">
-                    <h3 className="p-3 text-lg">Description</h3>
-                    <WaterButton id={id} />
-                    <FeedButton id={id} />
-                    <MoistureGraph id={id} />
-                </div>
-          
+        <div className="flex flex-row m-2">
+          <div className="flex flex-col justify-center items-center pt-1 mt-1" id="plant">
+            <h1 className="text-center bg-green-100 text-2xl ml-5">Name</h1>
+            <Image
+              className="object-cover rounded mt-5"
+              width={300}
+              height={300} // Added height for consistent image dimensions
+              src={imgName}
+              alt="Description of image" // Added alt text for accessibility
+            />
+            <LatestMoistureInfo id={id} />
+            <div className="flex flex-row space-x-2 mt-2"> {/* Added space-x-2 for spacing between buttons */}
+              <WaterButton id={id} />
+              <FeedButton id={id} />
             </div>
-        </>)
+          </div>
+          <div className="flex flex-col pt-6 mt-6">
+            <MoistureGraph id={id} />
+          </div>
+        </div>
+      </>)
 }

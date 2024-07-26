@@ -97,7 +97,7 @@ export default function MoistureGraph({ id }: { id: number }) {
       y: {
         title: {
           display: true,
-          text: 'Value',
+          text: 'Humidity %',
         },
       },
     } as any, // Using 'any' to bypass type-checking temporarily for 'options'
@@ -106,7 +106,7 @@ export default function MoistureGraph({ id }: { id: number }) {
   };
 
   return (
-    <div className= "object-cover" style={{ height: '700px', width: '700px' }}>
+    <div className= "object-cover" style={{ height: '700px', width: '800px' }}>
       <Line data={chartData} options={options} />
     </div>
   );

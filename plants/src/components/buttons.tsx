@@ -57,7 +57,7 @@ export function FeedButton({ id }: { id: number }) {
   },);
 
   return (<>
-    <Button variant="shadow" className="bg-green-500 p-5 mb-3 rounded" onPress={() => { handleClick("FEEDING", id, setLatestFed) }}>
+    <Button variant="shadow" className="bg-green-500 p-5 m-3 rounded" onPress={() => { handleClick("FEEDING", id, setLatestFed) }}>
       <div className="flex flex-col">
         <span className="font-bold">Feed</span>
         <span className="text-xs italic"> Last Fed:
@@ -94,7 +94,7 @@ export function WaterButton({ id }: { id: number }) {
   },);
 
   return (<>
-    <Button variant="shadow" className="bg-blue-300 p-5 mb-3 rounded" onPress={() => { handleClick("WATERING", id, setLatestWatered) }}>
+    <Button variant="shadow" className="bg-blue-300 p-5 m-3 rounded" onPress={() => { handleClick("WATERING", id, setLatestWatered) }}>
       <div className="flex flex-col">
         <span className="font-bold"> Water</span>
         <span className="text-xs italic"> Last Watered:
