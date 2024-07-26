@@ -1,6 +1,8 @@
 'use client'
 import { Button } from "@nextui-org/react";
 import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import { PLANTS } from "@/data/plantsInfo";
 
 const beUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
@@ -57,7 +59,7 @@ export function FeedButton({ id }: { id: number }) {
   },);
 
   return (<>
-    <Button variant="shadow" className="bg-green-500 p-5 m-3 rounded" onPress={() => { handleClick("FEEDING", id, setLatestFed) }}>
+    <Button variant="shadow" className="bg-green-500 p-5 m-3 rounded h-25 w-50" onPress={() => { handleClick("FEEDING", id, setLatestFed) }}>
       <div className="flex flex-col">
         <span className="font-bold">Feed</span>
         <span className="text-xs italic"> Last Fed:
@@ -94,7 +96,7 @@ export function WaterButton({ id }: { id: number }) {
   },);
 
   return (<>
-    <Button variant="shadow" className="bg-blue-300 p-5 m-3 rounded" onPress={() => { handleClick("WATERING", id, setLatestWatered) }}>
+    <Button variant="shadow" className="bg-blue-300 p-5 m-3 rounded h-25 w-50" onPress={() => { handleClick("WATERING", id, setLatestWatered) }}>
       <div className="flex flex-col">
         <span className="font-bold"> Water</span>
         <span className="text-xs italic"> Last Watered:
@@ -103,5 +105,29 @@ export function WaterButton({ id }: { id: number }) {
         </span>
       </div>
     </Button>
+  </>)
+}
+
+export function PlantNavigationButton({direction, currentPlantId} : {direction :number, currentPlantId: number}) {
+  const router = useRouter();
+  const text = direction === -1 ? "Previous" : "Next";
+
+  const handleClick = () => {
+    let nextId : number;
+
+    if (currentPlantId + direction > PLANTS.length ) {
+      nextId = 1;
+    }
+    else if (currentPlantId + direction < 1) {
+      nextId = PLANTS.length;
+    }
+    else {
+      nextId = currentPlantId + direction;
+    }
+    router.push(`/sensor/${nextId}`);
+  }
+
+  return (<>
+    <Button onPress={handleClick} className="bg-green-500 h-10 w-25 m-10 m-3 rounded">{text}</Button>
   </>)
 }

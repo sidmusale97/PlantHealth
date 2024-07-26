@@ -3,7 +3,7 @@ import { useParams } from "next/navigation";
 import { Image, Button, Link } from "@nextui-org/react";
 import LatestMoistureInfo from "@/components/lastestmoisture";
 import { error } from "console";
-import { WaterButton, FeedButton } from "@/components/buttons";
+import { WaterButton, FeedButton, PlantNavigationButton } from "@/components/buttons";
 import { useState } from "react";
 import MoistureGraph from "./MoistureGraph";
 
@@ -15,9 +15,6 @@ export default function Sensor() {
     const id = Number(params.id)
     const imgName = `/plant${id}.jpg`
 
-    
-
-
     interface PlantInfo {
         name: string,
         lastWatered: number,
@@ -28,6 +25,7 @@ export default function Sensor() {
     return (
         <>
         <div className="flex flex-row m-2">
+          <PlantNavigationButton direction={-1} currentPlantId={id} />
           <div className="flex flex-col justify-center items-center pt-1 mt-1" id="plant">
             <h1 className="text-center bg-green-100 text-2xl ml-5">Name</h1>
             <Image
@@ -46,6 +44,7 @@ export default function Sensor() {
           <div className="flex flex-col pt-6 mt-6">
             <MoistureGraph id={id} />
           </div>
+          <PlantNavigationButton direction={1} currentPlantId={id} />
         </div>
       </>)
 }
