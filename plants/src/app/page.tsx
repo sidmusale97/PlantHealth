@@ -1,5 +1,5 @@
-import PlantCard from "@/components/plantcard";
-import { PlantInfo, PLANTS } from "@/data/plantsInfo";
+import PlantCard from "components/plantcard";
+import { PlantInfo, PLANTS } from "data/plantsInfo";
 
 function chunkArray(array : PlantInfo[], chunkSize: number) {
   return Array.from({ length: Math.ceil(array.length / chunkSize) }, (_, index) =>

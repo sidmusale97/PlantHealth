@@ -1,14 +1,13 @@
 'use client'
 import { useParams } from "next/navigation";
 import { Image, Button, Link } from "@nextui-org/react";
-import LatestMoistureInfo from "@/components/lastestmoisture";
+import LatestMoistureInfo from "components/LastestMoisture";
 import { error } from "console";
-import { WaterButton, FeedButton } from "@/components/buttons";
+import { WaterButton, FeedButton } from "components/Buttons";
 import { useState } from "react";
+import MoistureGraph from "./MoistureGraph";
 
 export default function Sensor() {
-
-    const [moistures, setMoitures] = useState([])
 
     const params = useParams()
     const id = Number(params.id)
@@ -33,11 +32,10 @@ export default function Sensor() {
                     <LatestMoistureInfo id={id} />
                 </div>
                 <div className="flex flex-col p-3">
-                    <h3 className="p-3 text-lg">Description</h3>
                     <WaterButton id={id} />
                     <FeedButton id={id} />
                 </div>
-          
+                < MoistureGraph id={id} />
             </div>
         </>)
 }
