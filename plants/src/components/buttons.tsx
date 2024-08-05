@@ -4,10 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { PLANTS } from "@/data/plantsInfo";
 
-const beUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+const beUrl = process.env.NEXT_PUBLIC_HEALTH_URL
 
 const handleClick = (type: string, id: number, setValue: any) => {
-  const beUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
   fetch(`${beUrl}/event`, {
     method: 'POST',
@@ -56,7 +55,7 @@ export function FeedButton({ id }: { id: number }) {
     }, 600000);
 
     return () => clearInterval(interval);
-  },);
+  },[id]);
 
   return (<>
     <Button variant="shadow" className="bg-green-500 p-5 m-3 rounded h-25 w-50" onPress={() => { handleClick("FEEDING", id, setLatestFed) }}>
@@ -93,7 +92,7 @@ export function WaterButton({ id }: { id: number }) {
     }, 600000);
 
     return () => clearInterval(interval);
-  },);
+  },[id]);
 
   return (<>
     <Button variant="shadow" className="bg-blue-300 p-5 m-3 rounded h-25 w-50" onPress={() => { handleClick("WATERING", id, setLatestWatered) }}>

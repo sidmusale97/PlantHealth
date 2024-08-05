@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import DecimalDisplay from "./DecimalDisplay";
 
+const beUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
 export default function LatestMoistureInfo({id} : {id: number}){
 
@@ -10,7 +11,6 @@ const [dataTimestamp, setDataTimestamp] = useState(0)
 
 const fetchData = async () => {
     try {
-      const beUrl = process.env.NEXT_PUBLIC_BACKEND_URL
       const res = await fetch(`${beUrl}/latest-moisture/${id}`)
       const result = await res.json()
       setLatestMoisture(Number(result.moisture));

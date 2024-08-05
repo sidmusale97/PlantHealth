@@ -1,5 +1,5 @@
 export const PLANTS = [
-    {id: 1, name: "Flowers"},
+    {id: 1, name: "Petunia"},
     {id: 2, name: "Basil"},
     {id: 3, name: "Wonderful Ivy"},
     {id: 4, name: "Cactus"},
@@ -11,5 +11,7 @@ export const PLANTS = [
 
 export interface PlantInfo {
     id: number,
-    name: string
-}
+    name: string,
+    careInstructions: string,
+    sensorId: number
+  };

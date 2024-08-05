@@ -16,6 +16,7 @@ ChartJS.register(
     LineElement    // Register the LineElement
   );
 
+const beUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 export default function MoistureGraph({ id }: { id: number }) {
   const [chartData, setChartData] = useState({
     labels: [],
@@ -32,7 +33,6 @@ export default function MoistureGraph({ id }: { id: number }) {
 
   const fetchData = async () => {
     try {
-      const beUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const res = await fetch(`${beUrl}/moisture?sensor_id=${id}`);
       if (!res.ok) {
         throw new Error('Failed to fetch data');
@@ -95,10 +95,15 @@ export default function MoistureGraph({ id }: { id: number }) {
         },
       },
       y: {
+        beginAtZero: true,
         title: {
           display: true,
           text: 'Humidity %',
         },
+        ticks: {
+            min: 0,
+            max: 1
+        }
       },
     } as any, // Using 'any' to bypass type-checking temporarily for 'options'
 
