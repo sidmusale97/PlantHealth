@@ -16,7 +16,7 @@ ChartJS.register(
     LineElement    // Register the LineElement
   );
 
-const beUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+const beUrl = process.env.NEXT_PUBLIC_HEALTH_URL;
 export default function MoistureGraph({ id }: { id: number }) {
   const [chartData, setChartData] = useState({
     labels: [],
