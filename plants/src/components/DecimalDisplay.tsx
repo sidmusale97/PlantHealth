@@ -4,9 +4,13 @@ export default function DecimalDisplay({ decimal }: { decimal: number }) {
     let textColorClass;
 
     // Determine text color class based on value
-    if (decimal < LOW_THRESHOLD || decimal > HIGH_THRESHOLD) {
+    if (decimal < LOW_THRESHOLD ) {
         textColorClass = 'text-red-500'; // Red color for negative values
-    } else {
+    } 
+    else if (decimal > HIGH_THRESHOLD) {
+        textColorClass = 'text-blue-500'; // Blue color for over watered values
+    }
+    else {
         textColorClass = 'text-green-500'; // Green color for positive values
     }
     return (
