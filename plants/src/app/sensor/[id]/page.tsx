@@ -44,14 +44,14 @@ export default function Sensor() {
               src={imgName}
               alt="Description of image" // Added alt text for accessibility
             />
-            <LatestMoistureInfo id={id} />
+            <LatestMoistureInfo id={plant.sensorId} />
             <div className="flex flex-row space-x-2 mt-2"> {/* Added space-x-2 for spacing between buttons */}
-              <WaterButton id={id} />
-              <FeedButton id={id} />
+              <WaterButton id={plant.sensorId} />
+              <FeedButton id={plant.sensorId} />
             </div>
           </div>
           <div className="flex flex-col pt-6 mt-6">
-            <MoistureGraph id={id} />
+            <MoistureGraph id={plant.sensorId} />
           </div>
           <PlantNavigationButton direction={1} currentPlantId={id} />
         </div>

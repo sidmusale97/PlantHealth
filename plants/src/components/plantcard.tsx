@@ -8,8 +8,7 @@ import { PlantInfo } from "@/data/plantsInfo";
 const infoUrl = process.env.NEXT_PUBLIC_INFO_URL;
 
 export default function PlantCard(plant: PlantInfo) {
-
-  
+console.log("plant: " + plant)  
   const imgName = `https://storage.googleapis.com/sid-plants/plant${plant.id}.jpg`
   const route = `/sensor/${plant.id}`
 
