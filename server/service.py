@@ -20,9 +20,11 @@ LATEST_WATERING_KEY = "latest_watering_%s"
 LATEST_FEEDING_KEY = "latest_feeding_%s"
 
 WET = 300
-DRY = 600
+DRY = 550
 
 def normalize_moisture(moisture : int) -> float:
+    if (int(moisture) < WET):
+        return 0
     latest_humidity = round(1 - (int(moisture) - WET)/(DRY-WET),2)
     return latest_humidity
 

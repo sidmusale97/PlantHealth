@@ -111,7 +111,7 @@ export default function MoistureGraph({ id }: { id: number }) {
   };
 
   return (
-    <div className= "object-cover" style={{ height: '700px', width: '800px' }}>
+    <div className= "object-cover" style={{ height: '300px', width: '600px' }}>
       <Line data={chartData} options={options} />
     </div>
   );
